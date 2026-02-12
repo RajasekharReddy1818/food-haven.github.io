@@ -1254,7 +1254,7 @@ Order:
             }
 
             animate();
-            /* ================= SWIPE TO CLOSE (FIXED PROPERLY) ================= */
+            /* ================= SWIPE TO CLOSE (CORRECT DIRECTION) ================= */
 
             function enableSwipe(panel, direction) {
 
@@ -1278,11 +1278,13 @@ Order:
                     currentX = e.touches[0].clientX;
                     let diff = currentX - startX;
 
-                    if (direction === "left" && diff < 0) {
+                    // About: swipe LEFT to close
+                    if (direction === "close-left" && diff < 0) {
                         panel.style.transform = `translateX(${diff}px)`;
                     }
 
-                    if (direction === "right" && diff > 0) {
+                    // Cart: swipe RIGHT to close
+                    if (direction === "close-right" && diff > 0) {
                         panel.style.transform = `translateX(${diff}px)`;
                     }
                 });
@@ -1296,8 +1298,8 @@ Order:
                     panel.style.transition = ".3s ease";
 
                     if (
-                        (direction === "left" && diff < -100) ||
-                        (direction === "right" && diff > 100)
+                        (direction === "close-left" && diff < -100) ||
+                        (direction === "close-right" && diff > 100)
                     ) {
                         closePanels();
                     }
@@ -1307,8 +1309,12 @@ Order:
                 });
             }
 
-            enableSwipe(document.getElementById("cart"), "left");
-            enableSwipe(document.getElementById("aboutPanel"), "right");
+            // About closes by swiping LEFT
+            enableSwipe(document.getElementById("aboutPanel"), "close-left");
+
+            // Cart closes by swiping RIGHT
+            enableSwipe(document.getElementById("cart"), "close-right");
+
 
         });
     </script>
