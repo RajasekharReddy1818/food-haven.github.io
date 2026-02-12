@@ -1254,12 +1254,13 @@ Order:
             }
 
             animate();
-            /* ================= SWIPE TO CLOSE (CORRECT DIRECTION) ================= */
+            /* ================= SWIPE TO CLOSE (SMOOTH + FLICK SUPPORT) ================= */
 
             function enableSwipe(panel, direction) {
 
                 let startX = 0;
                 let currentX = 0;
+                let startTime = 0;
                 let dragging = false;
 
                 panel.addEventListener("touchstart", function (e) {
@@ -1267,7 +1268,10 @@ Order:
                     if (!panel.classList.contains("open")) return;
 
                     startX = e.touches[0].clientX;
+                    currentX = startX;
+                    startTime = Date.now();
                     dragging = true;
+
                     panel.style.transition = "none";
                 });
 
@@ -1278,12 +1282,10 @@ Order:
                     currentX = e.touches[0].clientX;
                     let diff = currentX - startX;
 
-                    // About: swipe LEFT to close
                     if (direction === "close-left" && diff < 0) {
                         panel.style.transform = `translateX(${diff}px)`;
                     }
 
-                    // Cart: swipe RIGHT to close
                     if (direction === "close-right" && diff > 0) {
                         panel.style.transform = `translateX(${diff}px)`;
                     }
@@ -1294,17 +1296,25 @@ Order:
                     if (!dragging) return;
 
                     let diff = currentX - startX;
+                    let elapsed = Date.now() - startTime;
+                    let velocity = Math.abs(diff) / elapsed; // px per ms
 
-                    panel.style.transition = ".3s ease";
+                    panel.style.transition = ".25s ease";
 
-                    if (
-                        (direction === "close-left" && diff < -100) ||
-                        (direction === "close-right" && diff > 100)
-                    ) {
+                    const distanceThreshold = 60;   // much shorter drag
+                    const velocityThreshold = 0.5;  // fast flick
+
+                    const shouldClose =
+                        (direction === "close-left" && diff < -distanceThreshold) ||
+                        (direction === "close-right" && diff > distanceThreshold) ||
+                        velocity > velocityThreshold;
+
+                    if (shouldClose) {
                         closePanels();
+                    } else {
+                        panel.style.transform = "";
                     }
 
-                    panel.style.transform = "";
                     dragging = false;
                 });
             }
