@@ -436,6 +436,7 @@
 
         .cart {
             position: fixed;
+            will-change: transform;
             touch-action: pan-y;
             top: 0;
             right: -360px;
@@ -549,6 +550,7 @@
         /* ABOUT PANEL */
         .about-panel {
             position: fixed;
+            will-change: transform;
             touch-action: pan-y;
             top: 0;
             left: -360px;
@@ -1252,31 +1254,34 @@ Order:
             }
 
             animate();
-            /* ================= SWIPE TO CLOSE ================= */
+            /* ================= SWIPE TO CLOSE (FIXED PROPERLY) ================= */
 
             function enableSwipe(panel, direction) {
 
                 let startX = 0;
                 let currentX = 0;
-                let isDragging = false;
+                let dragging = false;
 
                 panel.addEventListener("touchstart", function (e) {
+
+                    if (!panel.classList.contains("open")) return;
+
                     startX = e.touches[0].clientX;
-                    isDragging = true;
+                    dragging = true;
+                    panel.style.transition = "none";
                 });
 
                 panel.addEventListener("touchmove", function (e) {
-                    if (!isDragging) return;
+
+                    if (!dragging) return;
 
                     currentX = e.touches[0].clientX;
                     let diff = currentX - startX;
 
-                    // Cart closes when swiping left
                     if (direction === "left" && diff < 0) {
                         panel.style.transform = `translateX(${diff}px)`;
                     }
 
-                    // About closes when swiping right
                     if (direction === "right" && diff > 0) {
                         panel.style.transform = `translateX(${diff}px)`;
                     }
@@ -1284,25 +1289,26 @@ Order:
 
                 panel.addEventListener("touchend", function () {
 
+                    if (!dragging) return;
+
                     let diff = currentX - startX;
 
-                    // Threshold distance to close
+                    panel.style.transition = ".3s ease";
+
                     if (
-                        (direction === "left" && diff < -80) ||
-                        (direction === "right" && diff > 80)
+                        (direction === "left" && diff < -100) ||
+                        (direction === "right" && diff > 100)
                     ) {
                         closePanels();
                     }
 
                     panel.style.transform = "";
-                    isDragging = false;
+                    dragging = false;
                 });
             }
 
-            // Enable swipe
             enableSwipe(document.getElementById("cart"), "left");
             enableSwipe(document.getElementById("aboutPanel"), "right");
-
 
         });
     </script>
