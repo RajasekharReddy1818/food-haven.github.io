@@ -436,7 +436,6 @@
 
         .cart {
             position: fixed;
-            touch-action: pan-y;
             top: 0;
             right: -360px;
             width: 360px;
@@ -549,21 +548,20 @@
         /* ABOUT PANEL */
         .about-panel {
             position: fixed;
-            touch-action: pan-y;
             top: 0;
-            left: -360px;
+            right: -360px;
             width: 360px;
             height: 100%;
             background: #fff;
             padding: 30px;
-            box-shadow: 10px 0 30px rgba(0,0,0,.15);
+            box-shadow: -10px 0 30px rgba(0,0,0,.15);
             transition: .3s ease;
             z-index: 999;
             overflow-y: auto;
         }
 
             .about-panel.open {
-                left: 0;
+                right: 0;
             }
 
             .about-panel h2 {
@@ -633,6 +631,15 @@
             padding: 30px;
             margin-top: 80px;
         }
+        .footer-link {
+            display: block;
+            margin-top: 10px;
+            color: var(--orange);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+
     </style>
 </head>
 
@@ -922,16 +929,22 @@
 
             <div class="footer-contacts">
 
-                <a href="https://wa.me/917989116107?text=Hello%20Food%20Haven,%20I%20am%20interested%20in%20placing%20a%20wholesale%20order.%20Please%20share%20bulk%20pricing%20details."
+                <a href="https://wa.me/918053765594?text=Hello%20Food%20Haven,%20I%20am%20interested%20in%20placing%20a%20wholesale%20order.%20Please%20share%20bulk%20pricing%20details."
                    target="_blank"
                    class="footer-link">
-                    📱 WhatsApp: +91 79891 16107
+                    📱 WhatsApp: +91 8053765594
+                </a>
+                <a href="https://wa.me/9199494484140?text=Hello%20Food%20Haven,%20I%20am%20interested%20in%20placing%20a%20wholesale%20order.%20Please%20share%20bulk%20pricing%20details."
+                   target="_blank"
+                   class="footer-link">
+                    📱 WhatsApp: +91 9949448414
                 </a>
 
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=rajareddy3555@gmail.com&su=Wholesale%20Order%20Inquiry&body=Hello%20Food%20Haven,%0A%0AI%20am%20interested%20in%20placing%20a%20bulk%20order.%20Please%20share%20your%20wholesale%20pricing%20details.%0A%0AThank%20you."
+
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=Foodhavenbhasa21@gmail.com&su=Wholesale%20Order%20Inquiry&body=Hello%20Food%20Haven,%0A%0AI%20am%20interested%20in%20placing%20a%20bulk%20order.%20Please%20share%20your%20wholesale%20pricing%20details.%0A%0AThank%20you."
                    target="_blank"
                    class="footer-link">
-                    ✉ Email: rajareddy3555@gmail.com
+                    ✉ Email:Foodhavenbhasa21@gmail.com
                 </a>
 
 
